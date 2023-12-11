@@ -1,6 +1,22 @@
 # [🌍 Lista de Países usando Next.js](https://codante.io/mini-projetos/lista-de-paises-nextjs)
 
-Explore o poder da versão 13 do Next.js criando uma lista de países utilizando a API [REST Countries](https://restcountries.com/).
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+Explore o poder do Next.js criando uma lista de países utilizando a API [REST Countries](https://restcountries.com/).
 
 ## 🔨 Requisitos
 - Utilize a [API REST Countries](https://restcountries.com/) para obter os dados dos países.
