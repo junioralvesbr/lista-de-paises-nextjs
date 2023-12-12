@@ -1,17 +1,7 @@
-import { CountryCard } from "@/components/CountryCard"
 import Image from "next/image"
 import Link from "next/link"
-
-async function getAllCountries() {
-  const response = await fetch('https://restcountries.com/v3.1/all')
-
-  if (!response.ok) {
-    throw new Error('failed to fetch data')
-  }
-
-  const data = await response.json()
-  return data
-}
+import { getAllCountries } from "@/lib/getAllCountries"
+import { CountryCard } from "@/components/CountryCard"
 
 async function getCountry(countryName: string) {
   const countries = await getAllCountries()
@@ -20,7 +10,7 @@ async function getCountry(countryName: string) {
 
   const borders = country.borders
 
-  const countriesBorder = borders.map(border => {
+  const countriesBorder = borders?.map(border => {
     const country = countries.find(country => country.cca3 === border)
     return country
   })
@@ -58,7 +48,7 @@ export default async function Page({ params }: { params: { name: string } }) {
             <dt className="text-2xl py-3">
               <b>🗣️ Linguas faladas:</b>
             </dt>
-            <ul className="flex gap-2">
+            <ul className="grid grid-cols-4 gap-2">
               {Object.values(country.languages).map((language, index) => (
                 <li className="bg-indigo-700 text-white rounded-full px-4 py-1" key={index}>
                   {language}
@@ -78,17 +68,19 @@ export default async function Page({ params }: { params: { name: string } }) {
         </article>
       </section>
 
-      <section className="mt-20">
-        <h2 className="text-4xl font-bold">
-          Países que fazem fronteira
-        </h2>
+      {countriesBorder && (
+        <section className="mt-20">
+          <h2 className="text-4xl font-bold">
+            Países que fazem fronteira
+          </h2>
 
-        <div className="grid grid-cols-5 gap-9 bg-white p-10">
-          {countriesBorder?.map((country, index) => (
-            <CountryCard country={country} key={index} />
-          ))}
-        </div>
-      </section>
+          <div className="grid grid-cols-5 gap-9 bg-white p-10">
+            {countriesBorder?.map((country, index) => (
+              <CountryCard country={country} key={index} />
+            ))}
+          </div>
+        </section>
+      )}
     </>
   )
 }

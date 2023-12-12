@@ -17,7 +17,7 @@ type Country = {
 }
 
 
-export function CountryCard({ country }) {
+export function CountryCard({ country }: { country: Country }) {
   return (
     <Link href={`/countries/${country.name.common}`}>
       <article className="bg-white p-4 rounded-lg min-h-full">
