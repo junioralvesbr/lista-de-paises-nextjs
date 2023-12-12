@@ -1,3 +1,4 @@
+import { CountryCard } from "@/components/CountryCard"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -12,16 +13,25 @@ async function getAllCountries() {
   return data
 }
 
-async function getCountry(name: string) {
+async function getCountry(countryName: string) {
   const countries = await getAllCountries()
 
-  const data = countries.find(country => country.name.common === name)
-  return data
+  const country = countries.find(country => country.name.common === countryName)
+
+  const borders = country.borders
+
+  const countriesBorder = borders.map(border => {
+    const country = countries.find(country => country.cca3 === border)
+    return country
+  })
+
+  return { country, countriesBorder }
 }
 
 export default async function Page({ params }: { params: { name: string } }) {
   const { name } = params;
-  const country = await getCountry(name)
+  const countryName = decodeURI(name)
+  const { country, countriesBorder } = await getCountry(countryName)
 
   return (
     <>
@@ -66,6 +76,18 @@ export default async function Page({ params }: { params: { name: string } }) {
             />
           </div>
         </article>
+      </section>
+
+      <section className="mt-20">
+        <h2 className="text-4xl font-bold">
+          Países que fazem fronteira
+        </h2>
+
+        <div className="grid grid-cols-5 gap-9 bg-white p-10">
+          {countriesBorder?.map((country, index) => (
+            <CountryCard country={country} key={index} />
+          ))}
+        </div>
       </section>
     </>
   )
