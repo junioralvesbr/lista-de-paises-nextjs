@@ -16,7 +16,9 @@ export default async function Home() {
 
   return (
     <section className="grid grid-cols-5 gap-9 mt-24">
-      <CountryCard countries={countries} />
+      {countries?.map((country, index) => (
+        <CountryCard country={country} key={index} />
+      ))}
     </section>
   )
 }
