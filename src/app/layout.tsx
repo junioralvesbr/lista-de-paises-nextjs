@@ -19,11 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${nunitoSans.className} bg-slate-200`}>
 
-        <header className='bg-white px-60'>
+        <header className='bg-white px-40'>
           <TopBar />
         </header>
 
-        <main className='px-60'>
+        <main className='px-40'>
           {children}
         </main>
 
